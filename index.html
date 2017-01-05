@@ -1,7 +1,65 @@
 <!DOCTYPE html>
 <html>
-<head>
-</head>
-<body>
-</body>
+    <head>
+        <!--jquery-->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        
+        <!--font awesome-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+        <!--bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        
+        <!--mdb-->
+        <link href="css/mdb.min.css" rel="stylesheet">
+        <script type="text/javascript" src="js/mdb.min.js"></script>
+        
+        <!--google charts-->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+        <!--mathjs-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.8.1/math.min.js"></script>
+        
+        <!--custom css-->
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+    
+    <body>
+        <!--form layout-->
+        <div class="row" id="form">
+            <form class="col-md-12">
+              <div class="row">
+                <div class="input-field col-md-12">
+                  <input id="equation" type="text" class="validate" required="true">
+                  <label for="equation">y' = </label>
+                </div>
+              </div>
+                
+              <div class="row">
+               <div class="input-field col-md-2">
+                    <input id="x" type="number" step="any" class="validate" required="true">
+                    <label for="x">x value</label>
+                </div>
+                <div class="input-field col-md-2">
+                    <input id="y" type="number" step="any" class="validate" required="true">
+                    <label for="y">y value</label>
+                </div>
+                <div class="input-field col-md-2">
+                    <input id="step_size" type="number" step="any" class="validate" required="true">
+                    <label for="step_size">step size</label>
+                </div>
+              </div>
+                
+              <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-default" id="graph_button">Graph</button>
+                </div>
+              </div>
+            </form>
+        </div>
+        
+        <!--app logic-->
+        <script type="text/javascript" src="js/app.js"></script>
+    </body>
 </html>
