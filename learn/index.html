@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        
+        <title>Euler's Method</title>
+        
+        <!--font awesome-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+        <!--bootstrap-->
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        
+        <!--mdb-->
+        <link href="/css/mdb.promin.css" rel="stylesheet">
+        
+        <!--custom css-->
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        
+        <link rel="icon" type="image/png" href="/icon.png">
+    </head>
+    
+    <body>
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a href="#top-section" class="btn-floating btn-large green">
+                <i class="fa fa-arrow-up"></i>
+            </a>
+        
+            <ul>
+                <li><a class="btn-floating blue" href="/" target="_blank"><i class="fa fa-line-chart"></i></a></li>
+            </ul>
+        </div>
+
+        <div class="container">
+            <div class="row" id="top-section">
+                <h1 class="display-1"><img src="/icon.png" height="70px"> Euler's Method</h1>
+                <hr>
+                
+                <h1>Initial Value Problem</h1><hr>
+                
+                <p>The initial value problem is as follows: </p>
+                
+                <blockquote class="blockquote">
+                    <p>Given \(\frac{dy}{dx}\) and an initial point \((x_0, y_0\)) find the function \(y\). </p>
+                </blockquote>
+                
+                <p>These problems are often solved by integrating \(\frac{dy}{dx}\) and plugging in the initial point to solve for the constant. </p>
+                
+                <p>However, it may be difficult or impossible to integrate the given differential. </p>
+                
+                <p>Euler's method can help us to approximate the behaviour as well as points of the function. </p>
+                
+                <h1>Derivation</h1><hr>
+                
+                $$m = \frac{\Delta y}{\Delta x}$$
+                
+                $$\Delta y = m \Delta x$$
+                
+                $$\Delta y = \frac{dy}{dx} | _{(x_n, y_n)} \Delta x$$
+                
+                $$y_{n+1} = y_n + \Delta y$$
+                
+                $$y_{n+1} = y_n + \frac{dy}{dx} \Delta x$$
+                
+                <p>Given \(x_0\) and \(y_0\) we can approximate many values of the function. A smaller \(\Delta x\) reduces error. </p>
+                
+                <h1>The Method</h1><hr>
+                
+                <p>Since we have a starting point, we can repeatedly find successive points on the function by using the equation described above. </p>
+                
+                <img class="img-fluid" src="/pics/1.png">
+                
+                <p>Notice how near the tangent point, the tangent line is really close to the curve. Points in this vicinity are almost on the function. If we repeatedly move rightwards and pick a point on the tangent, we can construct the function from the derivative with the initial point. </p>
+                
+                <img class="img-fluid" src="/pics/2.png">
+                
+                <p>Euler's method basically traces a function using the slope field. </p>
+                
+                <h1>Example Problem 1</h1><hr>
+                
+                <blockquote class="blockquote">
+                    <p>There is a special horse on a merry-go-round that makes Atharva <b><i>very</i></b> happy. 
+                    As the merry-go-round turns, the horse may go out of view, lowering Atharva's happiness. 
+                    At \(t\) seconds from the start, Atharva's happiness level changes at a rate of \(e^{\sin \pi t} \sin \pi t\) per second. 
+                    If Atharva's happiness at \(0\) seconds is \(1\) then:</p>
+                    
+                    <p>What is Atharva's happiness after \(10\) seconds?</p>
+                    
+                    <p>When is Atharva's happiness \(9\)?</p>
+                </blockquote>
+                
+                <p><a class="btn btn-info" data-toggle="collapse" href="#answer1" aria-expanded="false" aria-controls="answer1">Answer</a></p>
+                <div class="collapse" id="answer1">
+                  <div class="card card-block">
+                    <p>Atharva's happiness at \(t = 10\) is \(6.65\). Atharva's happiness is \(9\) at \(t = 12.77, 13.69, 14.22\).</p>
+                  </div>
+                </div>
+                
+                <p>We are unable to antiderive \(\frac{dy}{dx} = e^{\sin x} \sin x\), so we will use Euler's Method to graph the antiderivative. </p>
+                
+                <h1>Inaccuracies of Euler's Method</h1>
+                <hr>
+                
+                <p>While Euler's method is very useful for approximating the behaviour and values of functions given their derivative and an initial value, the graph generated is not always accurate and may have errors.</p>
+                <p>Euler's method will not work accurately on functions which have discontinuities (e.g. asymptotes, jumps) or infinite slope points, and may fail to graph the entire function.</p>
+                <p>This is caused due to the nature of the iterative formula which is used to approximate the function's behaviour: $$y_{n} = y_{n-1} + hf(x_{n-1}, y_{n-1})$$</p>
+                <p>Euler's method follows the slope of the function, which means that at the asymptote/infinite slope point, it is impossible to continue the generation of points.</p>
+                <p>For example, attemping to graph the equation \(\frac{dy}{dx}=-\frac{1}{x^2}\) with initial point \((1,1)\) will yield an incomplete graph, with the curve not going past \(x=0\).</p>
+                <p>Furthermore, the accuracy of Euler's method increases as the step size decreases. This is because there are more, shorter tangents to model the behaviour with, allowing behaviour to be modelled more accurately. Some functions may not be graphed accurately with larger step sizes, such as rapidly oscillating functions, or functions with steep slopes near the initial value.</p>
+                <p>In addition, if the function is concave up, Euler's method will approximate points which are below the actual curve, while if the function is concave down, the estimated points will be above the curve. This becomes more apparent as points further away from the given initial value are approximated.</p>
+                
+                <h1>Example Problem 2</h1>
+                
+                <blockquote class="blockquote">
+                    <p>Justin has been pulling a lot of all nighters recently. His sleep schedule can be modelled by the function \(s(t)= \frac{t(t+1)}{t^2 + 1}\), where \(s(t)\) represents how sleepy he feels at time \(t, t \ge 0\).</p>
+                    <p>Justin wants to know how sleepy he felt on average during \(1 \le t \le 5\), given that he felt exactly \(1\) unit of sleepiness at \(t=0\). Unfortunately, he's too sleepy to be able to do math right now so you'll have to help him!</p>
+                </blockquote>
+                
+                 <p><a class="btn btn-info" data-toggle="collapse" href="#answer2" aria-expanded="false" aria-controls="answer2">Answer</a></p>
+                 <div class="collapse" id="answer2">
+                  <div class="card card-block">
+                    <p>The answer is equal to \(\frac{1}{5-1}\int_{1}^{5} s(t) dt\), as we are finding the sum of sleepiness from \(t=1\) to \(t=5\), and dividing by \(4\) to find the average.</p>
+                    <p>In order to calculate this integral using the Fundamental Theorem of Calculus, we can use the program to perform Euler's method. Using \(0.1\) as the step value, we find that the approximation found at \(t=1\) is \(1.510758\), and the approximation found at \(t=5\) is \(6.197107\).</p>
+                    <p>Therefore, the final answer is \(\frac{1}{5-1}(6.197107 - 1.510758)=1.17158725\) units of sleepiness on average.</p>                  
+                  </div>
+                </div>
+
+                <h1>About the Program</h1><hr>
+                
+                <p>The program was made in almost pure Javascript totalling a little more than 650 lines of code. Made by Justin and Atharva. We used math.js for parsing and evaluating mathematical expressions. We used MathJax to display the beautiful latex you see. The graphing was done in native HTML5 canvas. We used MDB for the buttons, modal, shadow and animations. It was a nice learning experience to use Javascript. With bootstrap, the website somewhat has mobile support, however, touch interaction is not currently supported. </p>
+                
+            </div>
+        </div>
+        
+        <!--jquery-->
+        <script type="text/javascript" src="/js/jquery-2.2.3.min.js"></script>
+        
+        <!--font awesome-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+        <!--bootstrap-->
+        <script type="text/javascript" src="/js/tether.min.js"></script>
+        <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+        
+        <!--mdb-->
+        <script type="text/javascript" src="/js/mdb.promin.js"></script>
+
+        <!--mathjs-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.8.1/math.min.js"></script>-->
+        
+        <!--mathjax-->
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+        <!--app logic-->
+        <!--<script type="text/javascript" src="/js/app.js"></script>-->
+        
+        
+    </body>
+</html>

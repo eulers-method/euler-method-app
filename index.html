@@ -1,65 +1,256 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <!--jquery-->
-        <script type="text/javascript" src="js/jquery.min.js"></script>
-        
-        <!--font awesome-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 
-        <!--bootstrap-->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-        
-        <!--mdb-->
-        <link href="css/mdb.min.css" rel="stylesheet">
-        <script type="text/javascript" src="js/mdb.min.js"></script>
-        
-        <!--google charts-->
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-        <!--mathjs-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.8.1/math.min.js"></script>
-        
-        <!--custom css-->
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-    </head>
-    
-    <body>
-        <!--form layout-->
-        <div class="row" id="form">
-            <form class="col-md-12">
-              <div class="row">
-                <div class="input-field col-md-12">
-                  <input id="equation" type="text" class="validate" required="true">
-                  <label for="equation">y' = </label>
-                </div>
-              </div>
-                
-              <div class="row">
-               <div class="input-field col-md-2">
-                    <input id="x" type="number" step="any" class="validate" required="true">
-                    <label for="x">x value</label>
-                </div>
-                <div class="input-field col-md-2">
-                    <input id="y" type="number" step="any" class="validate" required="true">
-                    <label for="y">y value</label>
-                </div>
-                <div class="input-field col-md-2">
-                    <input id="step_size" type="number" step="any" class="validate" required="true">
-                    <label for="step_size">step size</label>
-                </div>
-              </div>
-                
-              <div class="row">
-                <div class="col-md-12">
-                    <button type="button" class="btn btn-default" id="graph_button">Graph</button>
-                </div>
-              </div>
-            </form>
+    <title>Euler's Method Demonstrator</title>
+
+    <meta name="theme-color" content="#89cce5">
+
+    <!--font awesome-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    <!--bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!--mdb-->
+    <link href="css/mdb.promin.css" rel="stylesheet">
+
+    <!--custom css-->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <link rel="icon" type="image/png" href="icon.png">
+</head>
+
+<body>
+    <div id="mdb-preloader" class="flex-center">
+        <div id="preloader-markup">
         </div>
-        
-        <!--app logic-->
-        <script type="text/javascript" src="js/app.js"></script>
-    </body>
+    </div>
+
+    <!--POINT MODAL-->
+    <div class="modal fade" id="point_modal" tabindex="-1" role="dialog" aria-labelledby="point_modal_label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    <h4 class="modal-title" id="point_modal_label">Calculated Points</h4>
+                </div>
+                <!--Body-->
+                <div class="modal-body">
+                    <!-- Nav tabs -->
+                    <ul id="points_tab" class="nav nav-tabs tabs-2" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect active" data-toggle="tab" href="#panel1" role="tab" id="step_size_pt_panel">Step Size 1</a>
+                        </li>
+                        <li class="nav-item" disabled>
+                            <a class="nav-link waves-effect" data-toggle="tab" href="#panel2" role="tab" id="step_size2_panel" disabled>Step Size 2</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panels -->
+                    <div class="tab-content card">
+                        <!--Panel 1-->
+                        <div class="tab-pane fade in active" id="panel1" role="tabpanel">
+                            <table class="table table-hover" id='point_table'>
+                                <thead>
+                                    <tr>
+                                        <th>x</th>
+                                        <th>y</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--Panel 2-->
+                        <div class="tab-pane fade" id="panel2" role="tabpanel">
+                            <table class="table table-hover" id='point_table2'>
+                                <thead>
+                                    <tr>
+                                        <th>x</th>
+                                        <th>y</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--Footer-->
+                <div class="modal-footer">
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+
+    <!--Help-->
+    <div class="modal fade" id="help_modal" tabindex="-1" role="dialog" aria-labelledby="point_modal_label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    <h4 class="modal-title" id="point_modal_label">Help</h4>
+                </div>
+                <!--Body-->
+                <div class="modal-body">
+                    <p>The equation button allows you to input the differential, intial values, step size (possibly 2nd step size) and iterations (number of times to run the method). </p>
+                    <p>The points button displays all the points found with Euler's method. </p>
+                    <p>Point mode draws circles to indicate graphically all the points found with Euler's method. </p>
+                    <p>This program supports all well known math functions and constants. Shown below are some example functions to input:</p>
+
+                    <ul class="list-group">
+                        <li class="list-group-item"><code>x^3+2x+3</code></li>
+                        <li class="list-group-item"><code>e^x</code></li>
+                        <li class="list-group-item"><code>sqrt(x)/cbrt(y)</code></li>
+                        <li class="list-group-item"><code>tan(x)</code></li>
+                        <li class="list-group-item"><code>atan(x)tanh(x)atanh(x)</code></li>
+                        <li class="list-group-item"><code>abs(x/y+y/x)</code></li>
+                        <li class="list-group-item"><code>log(x,e)</code></li>
+                        <li class="list-group-item"><code>x > 0 ? x^2 : x mod 10</code></li>
+                    </ul>
+                </div>
+                <!--Footer-->
+                <div class="modal-footer">
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+
+    <!-- INPUT Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal_label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    <h4 class="modal-title" id="modal_label">Euler's Method Demonstrator</h4>
+                </div>
+                <!--Body-->
+                <div class="modal-body">
+                    <!--form layout-->
+                    <div id="form">
+                        <div class="md-form">
+                            <input id="equation" type="text" class="validate form-control" required="true">
+                            <label for="equation">\(\frac{dy}{dx}\) = </label>
+                        </div>
+                    </div>
+
+                    <div id="form-inline">
+                        <div class="md-form col-md-3">
+                            <input id="x" type="number" step="any" class="validate form-control" required="true">
+                            <label for="x">\(x_0\)</label>
+                        </div>
+                        <div class="md-form col-md-3">
+                            <input id="y" type="number" step="any" class="validate form-control" required="true">
+                            <label for="y">\(y_0\)</label>
+                        </div>
+                        <div class="md-form col-md-3">
+                            <input id="step_size" type="number" step="any" class="validate form-control" required="true">
+                            <label for="step_size">\(\Delta x\)</label>
+                        </div>
+                        <div class="md-form col-md-3">
+                            <input id="iterations" type="number" step="1" class="validate form-control" required="true">
+                            <label for="iterations">iterations</label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary waves-effect" id="experimental_button" type="button" data-toggle="collapse" data-target="#experimental" aria-expanded="false" aria-controls="experimental"><i class="fa fa-flask left"></i>Experimental</button>
+
+                    <div class="collapse" id="experimental">
+                        <p>You may set a second step size here. </p>
+                        <div class="md-form">
+                            <input type="number" step="any" id="step_size2" class="validate form-control">
+                            <label for="step_size2" class="">\(\Delta x_2\)</label>
+                        </div>
+                    </div>
+                </div>
+                <!--Footer-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info waves-effect" id="graph_button" class="close" data-dismiss="modal">GRAPH</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h3 class="h3-responsive" id="latex">$$\text{Euler's Method}$$</h3>
+
+        <span class="point_tooltip"></span>
+
+        <div class="row">
+            <canvas class="col-xs-12" id="canvas" style="box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"></canvas>
+        </div>
+
+        <div class="row" id="toolbar">
+            <div class="col-md-4">
+                <p class="text-xs-center">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-info waves-effect" data-toggle="modal" data-target="#modal" id="activate_modal_button">EQUATION</button>
+                    <button type="button" class="btn btn-info waves-effect" data-toggle="modal" data-target="#point_modal" id="activate_points" disabled>POINTS</button>
+                    <button type="button" class="btn btn-info waves-effect" data-toggle="modal" data-target="#help_modal" id="help"><i class="fa fa-question"></i></button>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p class="text-xs-center">
+                    <a class="btn-floating btn-small lime waves-effect" id="zoom-in"><i class="fa fa-search-plus"></i></a>
+                    <a class="btn-floating btn-small lime waves-effect" id="zoom-out"><i class="fa fa-search-minus"></i></a>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <div class="switch" style="padding-top: 20px;">
+                    <p class="text-xs-center">
+                        <label>
+                                Point Mode
+                                <input type="checkbox" id="point_mode" disabled onchange="toggle_point_mode(this)">
+                                <span class="lever"></span>
+                            </label>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--jquery-->
+    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+
+    <!--font awesome-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    <!--bootstrap-->
+    <script type="text/javascript" src="js/tether.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    <!--mdb-->
+    <script type="text/javascript" src="js/mdb.promin.js"></script>
+
+    <!--mathjs-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.8.1/math.min.js"></script>
+
+    <!--mathjax-->
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <!--app logic-->
+    <script type="text/javascript" src="js/app.js"></script>
+
+
+</body>
+
 </html>
